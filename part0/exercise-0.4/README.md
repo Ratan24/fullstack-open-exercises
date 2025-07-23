@@ -1,10 +1,5 @@
-
 sequenceDiagram
-    participant browser
-    participant server
-
     Note right of browser: User fills in form and clicks Save button
-    
     browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
     activate server
     Note right of server: Server processes form data and adds new note
@@ -12,7 +7,7 @@ sequenceDiagram
     deactivate server
 
     Note right of browser: Browser follows redirect automatically
-    
+
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
     server-->>browser: HTML document (with updated note count)
