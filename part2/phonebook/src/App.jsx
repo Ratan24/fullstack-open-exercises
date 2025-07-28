@@ -1,12 +1,23 @@
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'  // ← Missing useEffect!
+import axios from 'axios'                    // ← Missing axios!
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
+  const [persons, setPersons] = useState([])  // Start empty
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filter, setFilter] = useState('')
 
+  // "Order pizza when component appears"
+  useEffect(() => {
+    console.log('🚀 App: useEffect running')
+    personService
+      .getAll()
+      .then(initialPersons => {
+        console.log('📋 App: Received persons:', initialPersons)
+        setPersons(initialPersons)
+      })
+  }, [])
+
+  
 
   const handleNameChange = (event) => {
     // console.log(event.target.value)
@@ -25,10 +36,17 @@ const App = () => {
       name: newName,
       number: newNumber
     }
+
+    console.log("Creating person object:: ", personObject)
     
-    setPersons(persons.concat(personObject))  // Add to array
-    setNewName('')  // Clear input
-    setNewNumber('')
+    personService
+      .create(personObject)
+      .then(returnedPerson => {
+        console.log('✅ App: Person created:', returnedPerson)
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
   }
 
   const handleNumberChange = (event) => {
