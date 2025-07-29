@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'  // ← Missing useEffect!
-import axios from 'axios'                    // ← Missing axios!
+import axios from 'axios'    
+import personService from './services/persons'                // ← Missing axios!
 const App = () => {
   const [persons, setPersons] = useState([])  // Start empty
   const [newName, setNewName] = useState('')
